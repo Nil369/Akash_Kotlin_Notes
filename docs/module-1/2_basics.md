@@ -1,119 +1,221 @@
-# Module 2: Basics of Kotlin
+# Kotlin Basics
 
-## Kotlin Code Execution Architecture
-<br>
+## Variables and Data Types
 
-<img src="../img/kotlin-run-arch.png" alt="kotlin-runtime-architecture" style="width:100vw">
+### Variable Declaration
+```kotlin
+// Immutable variable (like final in Java)
+val name: String = "John"
+val age: Int = 25
+val height: Double = 1.75
+val isStudent: Boolean = true
 
-### Variables and Data Types:
-- Kotlin variables refer to memory location to store data
-- It is container which holds values
-- data of the variables can be changes and reused in program
+// Mutable variable
+var score: Int = 100
+var temperature: Double = 98.6
+```
 
-  ```kotlin
+### Type Inference
+```kotlin
+// Kotlin can infer types
+val inferredString = "Hello"  // Type: String
+val inferredNumber = 42       // Type: Int
+val inferredDecimal = 3.14    // Type: Double
+```
 
-  var userName = "Nil369"
-  val action = "Follow"
+### Real-world Example: User Profile
+```kotlin
+class UserProfile {
+    val userId: String = "U12345"  // Immutable user ID
+    var name: String = "John Doe"  // Mutable name
+    var age: Int = 30
+    var email: String = "john@example.com"
+    var isActive: Boolean = true
+    var lastLogin: Long = System.currentTimeMillis()
+}
+```
 
-  ```
+## Basic Operators
 
-#### val vs. var:
+### Arithmetic Operators
+```kotlin
+val a = 10
+val b = 3
 
-  - **var** type variabels are mutable can be changed
+val sum = a + b      // 13
+val difference = a - b  // 7
+val product = a * b    // 30
+val quotient = a / b   // 3
+val remainder = a % b  // 1
+```
 
-  ```kotlin
-    var name="Explore Coding with Akash"
-    name="Follow "//Success
-  ```
+### Comparison Operators
+```kotlin
+val x = 5
+val y = 10
 
-   - **val** types of variables are immutable cannot be changed
+val isEqual = x == y      // false
+val isNotEqual = x != y   // true
+val isLess = x < y        // true
+val isGreater = x > y     // false
+val isLessOrEqual = x <= y // true
+val isGreaterOrEqual = x >= y // false
+```
 
-  ```kotlin
-   val name="Explore Coding with Akash"
-   name="Follow "//Error
-  ```
+### Real-world Example: Shopping Cart
+```kotlin
+class ShoppingCart {
+    private var total: Double = 0.0
+    
+    fun addItem(price: Double) {
+        total += price
+    }
+    
+    fun applyDiscount(percentage: Int) {
+        total *= (1 - percentage / 100.0)
+    }
+    
+    fun getTotal(): Double = total
+}
+```
 
-#### Data Types:
+## Control Flow
 
-  - Data types represent the type of data variables holds.
+### If Expression
+```kotlin
+// Traditional if-else
+val age = 18
+if (age >= 18) {
+    println("You are an adult")
+} else {
+    println("You are a minor")
+}
 
-    - Number
+// If as an expression
+val status = if (age >= 18) "Adult" else "Minor"
+```
 
-      Hold any type of numeric values. Numbers can be of two types
+### When Expression (Enhanced Switch)
+```kotlin
+val dayOfWeek = 3
+val dayName = when (dayOfWeek) {
+    1 -> "Monday"
+    2 -> "Tuesday"
+    3 -> "Wednesday"
+    4 -> "Thursday"
+    5 -> "Friday"
+    6 -> "Saturday"
+    7 -> "Sunday"
+    else -> "Invalid day"
+}
+```
 
-        - Integers(Byte-1bytes, Short-2Bytes, Int-4Bytes ,Long-8Bytes)
-        - Floating Point(Float-4Bytes, Double-8Bytes)
+### Real-world Example: Grade Calculator
+```kotlin
+fun calculateGrade(score: Int): String {
+    return when {
+        score >= 90 -> "A"
+        score >= 80 -> "B"
+        score >= 70 -> "C"
+        score >= 60 -> "D"
+        else -> "F"
+    }
+}
+```
 
-    - Character
+## Loops
 
-      In kotlin char represented by **Char** keywords
-      2Bytes
+### For Loop
+```kotlin
+// Range-based for loop
+for (i in 1..5) {
+    println(i)  // Prints 1 to 5
+}
 
-    - Boolean
+// Iterating over a list
+val fruits = listOf("Apple", "Banana", "Orange")
+for (fruit in fruits) {
+    println(fruit)
+}
+```
 
-      true/false - 1bit
+### While Loop
+```kotlin
+var count = 0
+while (count < 5) {
+    println(count)
+    count++
+}
+```
 
-    - Array
+### Real-world Example: Password Generator
+```kotlin
+fun generatePassword(length: Int): String {
+    val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    var password = ""
+    
+    for (i in 0 until length) {
+        val randomIndex = (0 until chars.length).random()
+        password += chars[randomIndex]
+    }
+    
+    return password
+}
+```
 
-      Represented by Kotlin **Array** class and can be created using function **_arrayOf()_** and **Array()** constructor.
+## String Templates
+```kotlin
+val name = "Alice"
+val age = 25
+println("My name is $name and I am $age years old")
 
-    - String
+// Complex expression
+val price = 10.5
+val quantity = 3
+println("Total cost: ${price * quantity}")
+```
 
-      In Kotlin String is represented by **String** class.
+## Null Safety
+```kotlin
+// Nullable type
+var nullableString: String? = null
 
-      Set of character is a string.
+// Safe call operator
+val length = nullableString?.length  // Returns null if nullableString is null
 
-      "This is simple string"
+// Elvis operator
+val displayName = nullableString ?: "Anonymous"
 
-      """
-      This is raw string
-      """
+// Not-null assertion (use with caution)
+val forcedLength = nullableString!!.length  // Throws exception if null
+```
 
-#### Type inference:
-  When be created and assign variables instantly the there is not need to provide the type is inferred by compiler.
+### Real-world Example: User Authentication
+```kotlin
+class UserAuth {
+    private var currentUser: String? = null
+    
+    fun login(username: String, password: String): Boolean {
+        // Simulate authentication
+        return if (username.isNotEmpty() && password.length >= 6) {
+            currentUser = username
+            true
+        } else {
+            false
+        }
+    }
+    
+    fun getCurrentUser(): String {
+        return currentUser ?: throw IllegalStateException("No user logged in")
+    }
+}
+```
 
-  ```kotlin
-    val name = "Akash Halder"
-  ```
+## Practice Exercises
 
-#### Type Conversion:
+1. Create a temperature converter (Celsius to Fahrenheit)
+2. Implement a simple calculator
+3. Create a number guessing game
+4. Build a basic to-do list manager
 
-  There are helper functions that helps us to convert one type value into another type
-
-  ```kotlin
-  toByte()
-  toShort()
-  toInt()
-  toLong()
-  toFloat()
-  toDouble()
-  toChar()
-  ```
-
-  Example
-
-  ```kotlin
-  var value1=50
-  var value2:Long=value1.toLong()
-
-  ```
-
-#### Basic Operators:
-- Arithmetic operators
-
-  > +, -, \*, /, %
-
-- Comparison operators
-
-  > < >  , <, >=, <=, !=, ==
-
-- Logical operators
-
-  > &&, ||, !
-  
-
-#### Input/Output:
-
-- **readln()** and **readLine()** functions is used to take input
-
-- **print()** and **println()** functions are used to print on console
+Remember to practice these concepts by implementing real-world scenarios and solving problems. The more you code, the better you'll understand these fundamentals.

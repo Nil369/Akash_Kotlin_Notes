@@ -28,12 +28,17 @@ fun main(){
 
     var a = 20
     val b = 40
-    // b = 69 // This will produce error as var is immutable
+    // b = 69 // This will produce error as val is immutable
 
+
+    val bookName = "Master Kotlin - The only book you need to master kotlin" // Type Infering
+    val authorName = "Akash Halder" // String Type
+    val price = 400 // Int
+    val discount: Int // Explicit Type Declaration like TypeScript for Type-Safety
 
     // var userName; // This produces error as kotlin don't know the type of Data. If we assign it as soon as
     // we declare variable it works fine. For declaring variables like this we should specify its type first.
-    val userName:String;
+    val userName: String;
     userName = "Akash";
     println("Username: "+userName) // This is string Concatenation
 
@@ -41,10 +46,15 @@ fun main(){
     val name = "Akash Halder"
     val profession = "Programmer"
     println("Hello! My name is: $name and I'm a $profession") // This is String Interpolation
+    println("\t --------------------- \n") // This is String Interpolation
 
 
-    val x = 10
-    val y = 20
+    var x = 10
+    var y = 20
     println("The sum of $x and $y is: ${x+y}")
+
+    x = 88
+    y = 12
+    println("The sum of $x and $y is: ${x+y}\n")
 
 }
