@@ -14,6 +14,9 @@ Kotlin is a modern programming language developed by JetBrains that runs on the 
 - Data classes
 - First-class delegation
 
+## How Kotlin Executes out code??
+<img src="../img/kotlin-run-arch.png" alt="kotlin_run_time">
+
 ## Why Kotlin?
 
 1. **Modern Language Features**
